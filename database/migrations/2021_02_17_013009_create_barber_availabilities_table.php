@@ -13,7 +13,7 @@ class CreateBarberAvailabilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('barber_availability', function (Blueprint $table) {
+        Schema::create('barber_availabilities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('barber_id');
             $table->integer('weekday');
