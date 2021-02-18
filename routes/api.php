@@ -17,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('auth/login', [AuthController::class, 'login']);
-Route::post('auth/logout', [AuthController::class, 'logout'])->middleware('apiJwt');
-Route::post('auth/refresh', [AuthController::class, 'refresh']);
+Route::prefix('auth')->group(function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::middleware(['apiJwt'])->group(function () {
+        Route::post('refresh', [AuthController::class, 'refresh']);
+        Route::post('logout', [AuthController::class, 'logout']);
+
+    });
+});
 
 Route::post('user/store', [UserController::class, 'store']);
 Route::get('user', [UserController::class, 'read']);
