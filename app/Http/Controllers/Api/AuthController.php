@@ -20,13 +20,10 @@ class AuthController extends Controller
      */
     public function login(AuthRequest $request): JsonResponse
     {
-        $token = auth()->attempt([
-            'email' => $request->get('email'),
-            'password' => $request->get('password'),
-        ]);
+        $credentials = request(['email', 'password']);
 
-        if (!$token) {
-            return response()->json(['Usuário e/ou senha inválido!']);
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         return response()->json([
@@ -36,57 +33,26 @@ class AuthController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function logout(): JsonResponse
     {
-        //
+        auth()->logout();
+        return response()->json(['status' => 'success']);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Refresh a token.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function refresh(): JsonResponse
     {
-        //
-    }
+        $token = auth()->refresh();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json([
+            'data' => auth()->user(),
+            'token' => $token
+        ]);
     }
 }
