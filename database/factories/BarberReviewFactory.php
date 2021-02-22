@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\BarberReview;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BarberReviewFactory extends Factory
@@ -21,8 +22,11 @@ class BarberReviewFactory extends Factory
      */
     public function definition()
     {
+        $users = User::all();
+
         return [
-            'rate'
+            'user_id' => $users->random()->id,
+            'rate' => $this->faker->randomFloat(2, 0, 5),
         ];
     }
 }
