@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\BarberReview;
+use App\Models\BarberTestimonial;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class BarberReviewFactory extends Factory
+class BarberTestimonialFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = BarberReview::class;
+    protected $model = BarberTestimonial::class;
 
     /**
      * Define the model's default state.
@@ -25,6 +25,7 @@ class BarberReviewFactory extends Factory
         return [
             'user_id' => User::all()->random()->id,
             'rate' => $this->faker->randomFloat(2, 0, 5),
+            'body' => $this->faker->paragraph()
         ];
     }
 }
