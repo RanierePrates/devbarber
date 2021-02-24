@@ -3,18 +3,34 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barber;
 use Illuminate\Http\Request;
 
 class BarberController extends Controller
 {
+
+    private $barber;
+
+    /**
+     * BarberController constructor.
+     * @param $barber
+     */
+    public function __construct(Barber $barber)
+    {
+        $this->barber = $barber;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function index()
+    public function index(): array
     {
-        //
+        return [
+            'data' => $this->barber->all()
+        ];
     }
 
     /**

@@ -26,6 +26,17 @@ class UserController extends Controller
         $this->user = $user;
     }
 
+
+    /**
+     * @return array
+     */
+    public function read(): array
+    {
+        return [
+            'data' => auth()->user()
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *

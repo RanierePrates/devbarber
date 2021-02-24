@@ -66,4 +66,14 @@ class Barber extends Model
     {
         return $this->hasMany(BarberAvailability::class);
     }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getAvatarAttribute($value): string
+    {
+        return url("media/avatars/{$value}");
+    }
+
 }

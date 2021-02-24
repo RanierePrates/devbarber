@@ -27,13 +27,13 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::post('user/store', [UserController::class, 'store']);
-Route::get('user', [UserController::class, 'read']);
+Route::get('user', [UserController::class, 'read'])->middleware('apiJwt');
 Route::put('user/{id}', [UserController::class, 'update']);
 Route::get('user/favorites', [UserController::class, 'getFavorites']);
 Route::post('user/favorite', [UserController::class, 'addFavorite']);
 Route::post('user/appointments', [UserController::class, 'getAppointments']);
 
-Route::get('barbers/index', [BarberController::class, 'index']);
+Route::get('barbers/index', [BarberController::class, 'index'])->middleware('apiJwt');
 Route::get('barber/{id}', [BarberController::class, 'show']);
 Route::post('barber/{id}/appointment', [BarberController::class, 'setAppointment']);
 
